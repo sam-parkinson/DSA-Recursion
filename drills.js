@@ -29,11 +29,47 @@ function reverseString(string) {
   }
 }
 
-function nthTriangularNumber(num) {}
+function nthTriangularNumber(num) {
+  if (num < 0) {
+    return 'Please enter number greater than or equal to 0'
+  } else if (num === 0) {
+    return 0
+  } else {
+    return num + nthTriangularNumber(num - 1)
+  }
+}
 
-function stringSplitter(string, char) {}
+function stringSplitter(string, char) {
+  if (string.length === 1 && string.charAt().valueOf() != char) {
+    return string
+  } else if (string.length === 1) {
+    return ''
+  } else if (string.charAt().valueOf() === char) {
+    return stringSplitter(string.slice(1))
+  } else {
+    return string.charAt() + stringSplitter(string.slice(1), char)
+  }
+}
 
-function fibonacci(num) {}
+// come back to this -- not removing matching char at last position
+
+function fibonacci(num) {
+  if (num < 1) {
+    return 'Please enter a posiive integer'
+  } else if (num === 1 || num === 2) {
+    return 1
+  } else return num + fibonacci(num)
+}
+
+// fix this -- should print sequence of numbers
+
+function factorial(num) {
+  if (num < 1) {
+    return 'Please enter a positive integer'
+  } else if (num === 1) {
+    return 1
+  } else return num * factorial(num - 1)
+}
 
 function exitMaze(maze) {}
 
@@ -48,5 +84,14 @@ function binaryRepresentation(num) {}
 module.exports = {
   countingSheep, 
   powerCalculator,
-  reverseString
+  reverseString,
+  nthTriangularNumber,
+  stringSplitter,
+  fibonacci,
+  factorial,
+  exitMaze,
+  findAllExits,
+  anagrams,
+  orgChart,
+  binaryRepresentation
 }
