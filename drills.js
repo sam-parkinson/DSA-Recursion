@@ -58,7 +58,7 @@ function fibonacci(num) {
     return 'Please enter a posiive integer'
   } else if (num === 1 || num === 2) {
     return 1
-  } else return num + fibonacci(num)
+  } else return fibonacci(num - 2) + fibonacci(num - 1)
 }
 
 // fix this -- should print sequence of numbers
@@ -71,15 +71,88 @@ function factorial(num) {
   } else return num * factorial(num - 1)
 }
 
-function exitMaze(maze) {}
+function exitMaze(maze, position = [0, 0], path = '') {
+  if (maze[position[0]][position[1]] === 'e') {
+    return path
+  } else if (maze[position[0]][position[1] + 1] && maze[position[0]][position[1] + 1] !== '*') {
+    newPos = [position[0], position[1] + 1];
+    newPath = path + 'R';
+    maze[position[0]][position[1]] = '*';
+    return exitMaze(maze, position = newPos, path = newPath)
+  } else if (maze[position[0] + 1][position[1]] && maze[position[0] + 1][position[1]] !== '*') {
+    newPos = [position[0] + 1, position[1]];
+    newPath = path + 'D';
+    maze[position[0]][position[1]] = '*';
+    return exitMaze(maze, position = newPos, path = newPath)
+  } else if (maze[position[0]][position[1] - 1] && maze[position[0]][position[1] - 1] !== '*') {
+    newPos = [position[0], position[1] - 1];
+    newPath = path + 'L';
+    maze[position[0]][position[1]] = '*';
+    return exitMaze(maze, position = newPos, path = newPath)
+  } else {
+    newPos = [position[0] - 1, position[1]];
+    newPath = path + 'U';
+    maze[position[0]][position[1]] = '*';
+    return exitMaze(maze, position = newPos, path = newPath)  
+  }
+}
 
-function findAllExits(maze) {}
+function findAllExits(maze, position = [0, 0], path = '') {
 
-function anagrams(string) {}
+  const directions = []
+  
+  if (maze[position[0]][position[1] + 1] && maze[position[0]][position[1] + 1] !== '*') {
+    newPos = [position[0], position[1] + 1];
+    newPath = path + 'R';
+    maze[position[0]][position[1]] = '*';
+    directions.push({maze, newPos, newPath})
+  } 
 
-function orgChart(org) {}
+  if (maze[position[0] + 1][position[1]] && maze[position[0] + 1][position[1]] !== '*') {
+    newPos = [position[0] + 1, position[1]];
+    newPath = path + 'D';
+    maze[position[0]][position[1]] = '*';
+    directions.push({maze, newPos, newPath})
+  } 
+  
+  if (maze[position[0]][position[1] - 1] && maze[position[0]][position[1] - 1] !== '*') {
+    newPos = [position[0], position[1] - 1];
+    newPath = path + 'L';
+    maze[position[0]][position[1]] = '*';
+    directions.push({maze, newPos, newPath})
+  } 
+  
+  if (maze[position[0] - 1] && maze[position[0] - 1][position[1]] && maze[position[0] - 1][position[1]] !== '*') {
+    newPos = [position[0] - 1, position[1]];
+    newPath = path + 'U';
+    maze[position[0]][position[1]] = '*';
+    directions.push({maze, newPos, newPath})
+  }
+  
+  for (let i = 0; i < directions.length; i++) {
+    const { maze, newPos, newPath } = directions[i]
 
-function binaryRepresentation(num) {}
+    if (maze[newPos[0]][newPos[1]] === 'e') {
+      console.log('Path to the exit: ' + newPath);
+    } else {
+      findAllExits(maze, newPos, newPath)
+    } 
+  }
+
+  // this currently gets one way out, needs to keep going until all paths have been found, working with 3 separate stacks of function cals
+}
+
+function anagrams(string) {
+  // this will require the same sort of separate function calls logic as the previous one
+}
+
+function orgChart(org) {
+  // as will this
+}
+
+function binaryRepresentation(num) {
+  // I'll figure this one out later
+}
 
 module.exports = {
   countingSheep, 
